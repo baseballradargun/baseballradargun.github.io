@@ -7,18 +7,194 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
         <title> Baseball Radar Gun </title>
+        <base href='/'>
     </head>
     <body>
         <header id='grad1'>
             <h1>Baseball Radar Gun</h1>
+            <div class="topnav" id='navbar'>
+                <a class="active" href="/">Home</a>
+                <a href="about">About</a>
+                <a href="contact">Contact</a>
+            </div>
         </header>
         
         <div id='mainbody'>
-            <p> Calculate speed of pitch. </br>
-            First test reaction time. </br>
-            Then start clocking pithces. </br>
-            Get told speed with accuracy measurement.
+            <h2> Step 1: </h2>
+            <p> Test reaction time to determine individual reaction variance. </br>
+                Follow instruction in box below. </br>
+                Test has 10 rounds. </br>
+                Restart page to start test over.
             </p>
+            <h2> Step 2: </h2>
+            <p> Enter distance. </p>
+            <h2> Step 3: </h2>
+            <p> Start clocking speed (mph). </br>
+                Click button as pitcher releases ball. </br>
+                Click button again as ball hits catcher's mitt. </br>
+                See speed and accuracy estimate. </br></br></br>
+            </p>
+            <h3> 10 Round Reaction Time Test: </h3>
+            
+            <div id='reactiontest'>
+                <button class="button" id='button1' onclick='changeButton()'>
+                    <h2> Reaction Time Test </h2>
+                    <p>
+                        When the gray box turns gold, click as quickly as you can. </br>
+                        Click to start.
+                    <p>
+                </button>
+            </div>
+            
+            <div id='getstd'>
+                Enter standard deviation if skipping test (50ms is default):</br>
+                <input type="number" id="std" placeholder="(0-200)" min='0' max='200' step='1' style='width:4.5em'> ms</br>
+                <input type="submit" value=" Submit " onclick='setSTD()' style='margins:1em'>
+            </div>
+            
+            <div id='getdistance'>
+                <h3> Enter distance: </h3>
+                (60' 6'' is default)</br>
+                <input type="number" id="feet" placeholder="ft (0-400)" min='0' max='400' step='1' style='width:5.15em'> '
+                <input type="number" id="inches" placeholder="in (0-12)" min='0' max='12' step='1' style='width:5.15em'> '' </br>
+                <input type="submit" value=" Submit " onclick='setDist()' style='margins:1em'>
+            </div>
+            
+            <div>
+                <div id='radargunheader'>
+                    <h3> Radar Gun: </h3>
+                    <p> Click gun to start timer, click again to stop. </p>
+                </div>
+                <table id='thetable'>
+                    <tr>
+                        <th><h3>Radar Gun</h3></th>
+                        <th><h3>Speed</h3></th>
+                    </tr>
+                    <tr>
+                        <td style='text-align:center'>
+                            <button class="button2" id='button2' onclick='radarGun()'>
+                                <img src='download.jpg' id='gunpic'></img>
+                            </button>
+                        </td>
+                        <td id='outcol'><h2>__ mph ± __ mph</h2></td>
+                    </tr>
+                </table>
+            </div>
         </div>
+        
+        <footer>
+            <p>Website Author: Nat Swinger, Host: Github, Created: 06/2021</p>
+        </footer>
+        
+        <script>
+            var gun = 0;
+            var inchdist = 726;
+            var count = 0;
+            var counter = 0;
+            var meanVal = 0;
+            var SDresult = 50;
+            var t0 = 0;
+            var t1 = 0;
+            var time = 0;
+            var times = [];
+            var start = 0;
+            var stop = 0;
+            
+            function setDist(){
+                var feet = parseInt(document.getElementById('feet').value, 10);
+                var inches = parseInt(document.getElementById('inches').value, 10);
+                inchdist =  (feet * 12) + inches;
+                if(!inchdist) {
+                    inchdist = 726;
+                }
+            }
+        
+            function setSTD(){
+                var std = parseInt(document.getElementById('std').value, 10);
+                SDresult = std;
+                if(!SDresult) {
+                    SDresult = 50;
+                }
+            }
+        
+            function changeButton(){
+                var prop = document.getElementById('button1');
+                if (count==0){
+                    prop.disabled = true;
+                    prop.style.backgroundColor = '#acacac';
+                    prop.style.color = '#131313';
+                    prop.innerHTML = '<h2> ... </h2> <p>Wait for gold</p>';
+                    setTimeout(function(){
+                        prop.style.backgroundColor = '#b7a57a';
+                        prop.innerHTML = '<h2> ... </h2> <p>Click!</p>';
+                        count = 1;
+                        prop.disabled = false;
+                        t0 = performance.now();
+                    },(Math.random()*3000 + 3000));
+                }
+                if (count==1){
+                    t1 = performance.now();
+                    time = t1-t0;
+                    prop.disabled = true;
+                    setTimeout(function(){prop.disabled = false},300);
+                    prop.style.backgroundColor = '#4b2e83';
+                    prop.style.color = '#acacac';
+                    prop.innerHTML = '<h2>'+time+' ms</h2>'+'<p>Click to keep going</p>';
+                    times[counter] = time;
+                    counter = counter+1;
+                    if (counter>=10){
+                        count = 2;
+                    }
+                    else{
+                        count = 0;
+                    }
+                }
+                if (count==2){
+                    prop.style.backgroundColor = '#4b2e83';
+                    prop.style.color = '#acacac';
+                    StandardDeviation(times);
+                    prop.innerHTML = '<h2>mean: '+meanVal+'</br>standard deviation: '+SDresult+'</h2>';
+                }
+            }
+        
+            function radarGun(){
+                var btn = document.getElementById('button2');
+                var pic = document.getElementById('gunpic');
+                var otp = document.getElementById('outcol');
+                if (gun==0) {
+                    start = performance.now();
+                    pic.style = 'filter:hue-rotate(90deg)';
+                    btn.style.border = '8px solid green';
+                    gun=1;
+                    otp.innerHTML = '<h2>__ mph ± __ mph</h2>';
+                }
+                else if (gun==1) {
+                    stop = performance.now();
+                    pic.style = 'filter:hue-rotate(30deg)';
+                    btn.style.border = '8px solid #b7a57a';
+                    gun=0;
+                    var mph = Math.round(56.81*inchdist/(stop-start));
+                    var errorlow = Math.abs(mph - Math.round(56.81*inchdist/((stop-start)+SDresult)));
+                    var errorhigh = Math.abs(mph - Math.round(56.81*inchdist/((stop-start)-SDresult)));
+                    var error = Math.round((errorlow+errorhigh)/2);
+                    otp.innerHTML = '<h2>'+mph+' mph ± '+error+' mph</h2></br>(+ '+errorhigh+' mph)</br>(- '+errorlow+' mph)';
+                }
+            }
+            
+            function StandardDeviation(numbersArr) {
+                //--CALCULATE AVAREGE--
+                var total = 0;
+                for(var key in numbersArr)
+                    total += numbersArr[key];
+                meanVal = total/numbersArr.length;
+                //--CALCULATE AVAREGE--
+          
+                //--CALCULATE STANDARD DEVIATION--
+                var SDprep = 0;
+                for(var key in numbersArr)
+                    SDprep += Math.pow((parseFloat(numbersArr[key]) - meanVal),2);
+                SDresult = Math.sqrt(SDprep/numbersArr.length);
+            }
+        </script>
     </body>
 </html>

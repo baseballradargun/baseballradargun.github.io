@@ -1,33 +1,143 @@
 body {
     background-color: #131313;
+    color: #acacac;
 }
 
 header {
     background-color: #4b2e83;
-    position: fixed;
+    position: absolute;
+    height: 6.2em;
     left: 0;
     right: 0;
     top: 0;
-    bottom: 90%;
+}
+
+footer {
+    background-color: #4b2e83;
+    text-align: center;
+    position: absolute;
+    height: 4em;
+    left: 0;
+    right: 0;
+    top: 100em;
 }
 
 h1 {
     color: #acacac;
-    margin-left: 10%;
-    font-size: 200%;
-    font-size: 4vh;
+    margin-left: 5%;
+    font-size: 150%;
 }
 
-p {
+.topnav {
+    border-top: 2px solid #131313;
+    width: 70%;
+    overflow: hidden;
+    position: absolute;
+    left: 1em;
+}
+
+.topnav a {
+    float: left;
+    display: block;
     color: #acacac;
+    text-align: center;
+    padding: 0.4em 1em;
+    text-decoration: none;
+    font-size: 15px;
+    border-bottom: 2px solid #131313;
+    border-left: 2px solid #131313;
+}
+
+.topnav a.active {
+    background-color: #b7a57a;
+    color: #131313;
+}
+
+.topnav a:hover {
+    background-color: #acacac;
+    color: #4b2e83;
 }
 
 #mainbody {
-    position: fixed;
-    top: 10%;
+    position: absolute;
+    left: 1em;
+    right: 1em;
+    top: 6.2em;
+    color: #acacac;
+}
+
+#about {
+    position: absolute;
+    left: 1em;
+    right: 1em;
+    top: 8.2em;
+    word-wrap: break-word;
+    color: #acacac;
+}
+
+#contact {
+    position: absolute;
+    left: 1em;
+    right: 1em;
+    top: 8.2em;
+    word-wrap: break-word;
+    color: #acacac;
+}
+
+.button {
+    background-color: #4b2e83;
+    color: #acacac;
+    position: absolute;
+    top: 34em;
+    border: none;
+    width: 100%;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.button2 {
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    border: 8px solid #b7a57a;
+}
+
+#gunpic {
+    filter:hue-rotate(30deg);
+}
+
+#gunpic:hover {
+    filter:hue-rotate(30deg) brightness(50%);
+}
+
+#radargunheader {
+    position: absolute;
+    top: 55em;
+}
+
+table{
+    position: absolute;
+    top: 61em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    background-color: #4b2e83;
+    border: 5px solid #acacac;
+}
+
+#getstd {
+    position: absolute;
+    top: 38em;
+}
+
+#getdistance {
+    position: absolute;
+    top: 45em;
 }
 
 #grad1 {
-    border: 2px solid #acacac;
     background-image: linear-gradient(90deg, #4b2e83, 90%, #b7a57a);
 }
