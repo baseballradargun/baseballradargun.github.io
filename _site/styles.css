@@ -84,11 +84,18 @@ h1 {
     color: #acacac;
 }
 
+#reactiontest {
+    position: absolute;
+    top: 25em;
+    width: 100%;
+    bottom: 38em:
+}
+
 .button {
     background-color: #4b2e83;
     color: #acacac;
     position: absolute;
-    top: 34em;
+    top: 4em;
     border: none;
     width: 100%;
     padding: 1em;
