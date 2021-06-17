@@ -20,21 +20,18 @@
         </header>
         
         <div id='mainbody'>
-            <h2> Step 1: </h2>
-            <p> Test reaction time to determine individual reaction variance. </br>
-                Follow instruction in box below. </br>
-                Test has 10 rounds. </br>
-                Restart page to start test over.
-            </p>
-            <h2> Step 2: </h2>
-            <p> Enter distance. </p>
-            <h2> Step 3: </h2>
-            <p> Start clocking speed (mph). </br>
-                Click button as pitcher releases ball. </br>
-                Click button again as ball hits catcher's mitt. </br>
-                See speed and accuracy estimate. </br></br></br>
-            </p>
-            
+            <div id='instructions'>
+                <h2> Step 1: </h2>
+                <p> Test reaction time to determine individual reaction variance (follow instruction in box below - test has 10 rounds). </br>
+                    Restart page to start test over.
+                </p>
+                <h2> Step 2: </h2>
+                <p> Enter distance. </p>
+                <h2> Step 3: </h2>
+                <p> Start clocking speed (mph). </br>
+                    Click button as pitcher releases ball. Click button again as ball hits catcher's mitt. </br>
+                </p>
+            </div>
             <div id='reactiontest'>
                 <h3> 10 Round Reaction Time Test: </h3>
                 <button class="button" id='button1' onclick='changeButton()'>
@@ -177,7 +174,7 @@
                     var errorlow = Math.abs(mph - Math.round(56.81*inchdist/((stop-start)+SDresult)));
                     var errorhigh = Math.abs(mph - Math.round(56.81*inchdist/((stop-start)-SDresult)));
                     var error = Math.round((errorlow+errorhigh)/2);
-                    otp.innerHTML = '<h2>'+mph+' mph ± '+error+' mph</h2></br>(+ '+errorhigh+' mph)</br>(- '+errorlow+' mph)';
+                    otp.innerHTML = '<h2>'+mph+' mph ± '+error+' mph</h2>(+ '+errorhigh+' mph)</br>(- '+errorlow+' mph)';
                 }
             }
             
